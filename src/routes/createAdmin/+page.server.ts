@@ -1,5 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { error } from '@sveltejs/kit';
 import { userRepository, suRepository } from '$lib/Redis/dbRepository';
 import type { PageServerLoad } from './$types';
