@@ -7,7 +7,6 @@ const server = http.createServer(app);
 
 // SvelteKit handlers
 app.use(handler);
-
 const port = process.env.PORT || 3000;
 
 
