@@ -1,0 +1,86 @@
+<script lang="ts">
+	import Input from '../../lib/components/Input.svelte';
+	import { send } from '../../lib/api';
+	import { goto } from '$app/navigation';
+
+	export let error: string;
+	export let success: string;
+
+	async function register(event: SubmitEvent) {
+		error = '';
+
+		const formEl = event.target as HTMLFormElement;
+		const response = await send(formEl);
+
+		if (response.__is_http_error) {
+			console.log(response);
+		}
+		if (response.redirected) {
+			await goto(response.url);
+		}
+
+		if (response.ok) {
+			success = response.statusText;
+		}
+
+		formEl.reset();
+	}
+</script>
+
+<section class="py-12 sm:py-16 lg:py-20">
+	<div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
+		<div class="max-w-sm mx-auto">
+			<div class="text-center">
+				<img
+					class="w-auto h-12 mx-auto"
+					src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/logo-symbol.svg"
+					alt=""
+				/>
+				<h1 class="mt-12 text-3xl font-bold text-gray-900">Create super admin</h1>
+				<p class="mt-4 text-sm font-medium text-gray-500">
+					This user going to have all the permissions for the management.
+				</p>
+			</div>
+
+			<form on:submit|preventDefault={register} method="post" class="mt-4">
+				<div class="space-y-4">
+					<Input name="name" type="text" placeholder="Type your name here" label="Full Name" />
+					<Input name="email" type="email" placeholder="Type email address here" label="Email" />
+					<Input
+						name="phone"
+						type="tel"
+						placeholder="Type your contact here"
+						label="Contact Number"
+					/>
+					<Input
+						name="password"
+						type="password"
+						placeholder="Type strong password here"
+						label="Password"
+					/>
+
+					<div>
+						<button
+							type="submit"
+							class="inline-flex items-center justify-center w-full px-6 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
+						>
+							Create Super Admin
+						</button>
+					</div>
+				</div>
+			</form>
+
+			<div class="mt-6 text-center">
+				<p class="text-sm font-medium text-gray-900">
+					Already have an account? <a
+						href="/createAdmin"
+						title=""
+						class="font-bold hover:underline"
+					>
+						Login now
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</section>
