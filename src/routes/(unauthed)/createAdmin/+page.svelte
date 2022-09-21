@@ -1,29 +1,13 @@
 <script lang="ts">
-	import Input from '../../lib/components/Input.svelte';
-	import { send } from '../../lib/api';
-	import { goto } from '$app/navigation';
+	import Input from '../../../lib/components/Input.svelte';
+	import { applyAction, enhance } from '$app/forms';
+	import { notifier } from '@beyonk/svelte-notifications';
 
-	export let error: string;
-	export let success: string;
-
-	async function register(event: SubmitEvent) {
-		error = '';
-
-		const formEl = event.target as HTMLFormElement;
-		const response = await send(formEl);
-
-		if (response.__is_http_error) {
-			console.log(response);
-		}
-		if (response.redirected) {
-			await goto(response.url);
-		}
-
-		if (response.ok) {
-			success = response.statusText;
-		}
-
-		formEl.reset();
+	let form;
+	$: if (form && form?.data?.success) {
+		notifier.success(form.data.message);
+	} else {
+		notifier.danger(form?.data?.message);
 	}
 </script>
 
@@ -42,7 +26,16 @@
 				</p>
 			</div>
 
-			<form on:submit|preventDefault={register} method="post" class="mt-4">
+			<form
+				method="POST"
+				class="mt-4"
+				use:enhance={() => {
+					return async ({ result }) => {
+						if (result.type === 'redirect') await applyAction(result);
+						else form = result;
+					};
+				}}
+			>
 				<div class="space-y-4">
 					<Input name="name" type="text" placeholder="Type your name here" label="Full Name" />
 					<Input name="email" type="email" placeholder="Type email address here" label="Email" />

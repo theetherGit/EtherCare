@@ -13,11 +13,14 @@
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
+		"@beyonk/svelte-notifications": "^4.2.0",
 		"@playwright/test": "^1.22.2",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-node": "next",
-		"@sveltejs/kit": "^1.0.0-next.444",
+		"@sveltejs/kit": "^1.0.0-next.480",
+		"@tailwindcss/forms": "^0.5.3",
 		"@types/bcrypt": "^5.0.0",
+		"@types/cookie": "^0.5.1",
 		"@typescript-eslint/eslint-plugin": "^5.27.0",
 		"@typescript-eslint/parser": "^5.27.0",
 		"autoprefixer": "^10.4.8",
@@ -31,6 +34,7 @@
 		"redis-om": "^0.3.6",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.7.1",
+		"svelte-kit-cookie-session": "^3.1.2",
 		"svelte-preprocess": "^4.10.7",
 		"tailwindcss": "^3.1.8",
 		"tslib": "^2.3.1",
@@ -39,6 +43,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"classnames": "^2.3.2",
 		"express": "^4.18.1"
 	}
 }

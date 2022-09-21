@@ -1,6 +1,5 @@
 import { Entity, Schema } from 'redis-om';
 
-// All Interfaces for tables
 interface User {
 	name: string;
 	email: string;
@@ -31,3 +30,5 @@ class Su extends Entity {}
 export let suSchema = new Schema(Su, {
 	allow: { type: 'boolean' }
 });
+
+export { Su };

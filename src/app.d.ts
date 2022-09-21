@@ -2,9 +2,16 @@
 // for information about these interfaces
 // and what to do when importing types
 declare namespace App {
-	// interface Locals {}
+	interface Locals {
+		user?: {
+			name: string;
+			email: string;
+			phone: string;
+			type: string;
+			active: boolean;
+		};
+	}
 	// interface Platform {}
 	// interface PrivateEnv {}
 	// interface PublicEnv {}
-	// interface Session {}
 }

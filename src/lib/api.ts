@@ -4,19 +4,15 @@ export async function send(form: HTMLFormElement) {
 		body: new FormData(form),
 		headers: { accept: 'application/json' }
 	});
-	if (!response.ok) {
-		return response.text().then((json) => {
-			try {
-				var resParsed = JSON.parse(json);
-				if (resParsed?.status === 'error') {
-					console.log(`API response error from: ${json}`);
-				}
-				return resParsed;
-			} catch (err) {
-				return json;
+	return response.text().then((json) => {
+		try {
+			let resParsed = JSON.parse(json);
+			if (resParsed?.status === 'error') {
+				console.log(`API response error from: ${json}`);
 			}
-		});
-	} else {
-		return response;
-	}
+			return resParsed;
+		} catch (err) {
+			return json;
+		}
+	});
 }
