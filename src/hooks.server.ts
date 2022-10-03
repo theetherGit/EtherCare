@@ -18,7 +18,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 		isAuthenticated: false
 	};
 	if (typeof session === ('undefined' || '') || !session) {
-
 		return resolve(event);
 	}
 	let currentUser;
