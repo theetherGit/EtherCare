@@ -1,11 +1,10 @@
 import type { PageLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
 
 export const load: PageLoad = async ({ parent }) => {
+	console.log(await parent())
 	const { isAuthenticated } = await parent();
 	if (!isAuthenticated) {
-		return {
-			status: 302,
-			redirect: '/login'
-		};
+		throw redirect(302, '/login');
 	}
 };

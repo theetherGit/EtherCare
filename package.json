@@ -16,7 +16,7 @@
 		"@playwright/test": "^1.22.2",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-node": "next",
-		"@sveltejs/kit": "^1.0.0-next.504",
+		"@sveltejs/kit": "^1.0.0-next.507",
 		"@tailwindcss/forms": "^0.5.3",
 		"@types/bcrypt": "^5.0.0",
 		"@types/cookie": "^0.5.1",
@@ -44,6 +44,7 @@
 	"type": "module",
 	"dependencies": {
 		"classnames": "^2.3.2",
-		"express": "^4.18.1"
+		"express": "^4.18.1",
+		"svelte-preprocess": "^4.10.7"
 	}
 }

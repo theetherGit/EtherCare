@@ -400,29 +400,28 @@
 								</svg>
 								Settings
 							</a>
-
-							<a
-								href="/dashboard"
-								title=""
-								on:click={logout}
-								class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
-							>
-								<svg
-									class="mr-4 h-5 w-5 flex-shrink-0"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-									stroke-width="2"
+							<form action="/logout" method="POST">
+								<button
+									title=""
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-									/>
-								</svg>
-								Logout
-							</a>
+									<svg
+										class="mr-4 h-5 w-5 flex-shrink-0"
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+										stroke-width="2"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+										/>
+									</svg>
+									Logout
+								</button>
+							</form>
 						</nav>
 					</div>
 				</div>

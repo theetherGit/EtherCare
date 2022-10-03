@@ -14,15 +14,11 @@ const unProtectedRoutes: string[] = [
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const session = event.cookies.get('session');
-
+	event.locals.userAuth = {
+		isAuthenticated: false
+	};
 	if (typeof session === ('undefined' || '') || !session) {
-		// Using routeId because routes return __data.json file as route
-		if (!unProtectedRoutes.includes(event.routeId as string)) {
-			return redirect(307, '/login');
-		}
-		event.locals.userAuth = {
-			isAuthenticated: false
-		};
+
 		return resolve(event);
 	}
 	let currentUser;
@@ -34,19 +30,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 			isAuthenticated: true,
 			user: currentUser as import('$lib/utils').User
 		};
-	} else {
-		await event.cookies.set('session', '');
-		return redirect(307, '/login');
-	}
-
-	if (currentUser) {
-		event.locals.userAuth = {
-			isAuthenticated: true,
-			user: currentUser as import('$lib/utils').User
-		};
-	} else {
-		// Using routeId because routes return __data.json file as route
-		if (!unProtectedRoutes.includes(event.routeId as string)) return redirect(307, '/login');
 	}
 	return resolve(event);
 };

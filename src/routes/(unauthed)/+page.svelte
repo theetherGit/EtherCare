@@ -1,3 +1,7 @@
+<script>
+	import { base } from '$app/paths';
+</script>
+
 <section class="bg-gray-50 pt-12 sm:pt-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="mx-auto max-w-2xl text-center">
@@ -61,12 +65,8 @@
 		<div class="relative">
 			<div class="absolute inset-0 h-2/3 bg-gray-50" />
 			<div class="relative mx-auto">
-				<div class="lg:mx-auto lg:max-w-6xl">
-					<img
-						class="scale-110 transform"
-						src="https://cdn.rareblocks.xyz/collection/clarity/images/hero/2/illustration.png"
-						alt=""
-					/>
+				<div class="lg:mx-auto lg:max-w-6xl mb-10">
+					<img class="scale-110 transform" src="ladning.png" alt="" />
 				</div>
 			</div>
 		</div>
