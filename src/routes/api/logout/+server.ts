@@ -8,10 +8,7 @@ export const POST: RequestHandler = async ({ cookies, locals }) => {
 		await sessionManagerRepository.remove(cookies.get('session') as string);
 		await cookies.set('session', '', {
 			path: '/',
-			httpOnly: true,
-			sameSite: 'strict',
-			secure: !dev,
-			maxAge: 60 * 60 * 24 * 30
+			expires: new Date(0),
 		});
 		return redirect(302, '/login');
 	} else return redirect(307, '/');
