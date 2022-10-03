@@ -3,9 +3,6 @@ import { createClient } from 'redis';
 import { REDIS_URL } from '$env/static/private';
 
 const url = REDIS_URL;
-export const connection = createClient({ url });
+export const connection = await createClient({ url });
 await connection.connect();
-
-const client = await new Client().use(connection);
-
-export default client;
+export const client = await new Client().use(connection);

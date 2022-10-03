@@ -8,26 +8,26 @@
 
 <svelte:window bind:innerWidth />
 
-<header class="py-4 md:py-6 z-10">
-	<div class="container px-4 mx-auto sm:px-6 lg:px-8">
+<header class="z-10 py-4 md:py-6">
+	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex items-center justify-between">
 			<div class="relative inline-flex sm:inline">
 				<span
-					class="bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-lg filter opacity-50 w-full h-full absolute inset-0"
+					class="absolute inset-0 h-full w-full bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] opacity-50 blur-lg filter"
 				/>
-				<span class="relative font-bold text-3xl">EtherCare</span>
+				<span class="relative text-3xl font-bold">EtherCare</span>
 			</div>
 
 			<div class="flex lg:hidden">
 				<button
-					class="w-10 h-8 relative lg:hidden p-6"
+					class="relative h-8 w-10 p-6 lg:hidden"
 					on:click={() => {
 						show = !show;
 					}}
 				>
 					<span class="sr-only">Open main menu</span>
 					<div
-						class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2"
+						class="absolute left-1/2 top-1/2 block w-5   -translate-x-1/2  -translate-y-1/2 transform"
 					>
 						<span
 							aria-hidden="true"
@@ -35,7 +35,7 @@
 						/>
 						<span
 							aria-hidden="true"
-							class="block absolute h-0.5 w-3 rounded transform bg-current transition duration-500 ease-in-out {show ===
+							class="absolute block h-0.5 w-3 transform rounded bg-current transition duration-500 ease-in-out {show ===
 							true
 								? 'opacity-0'
 								: ''}"
@@ -49,12 +49,12 @@
 			</div>
 
 			<div
-				class="hidden lg:flex lg:ml-16 lg:items-center lg:justify-center lg:space-x-10 xl:space-x-16"
+				class="hidden lg:ml-16 lg:flex lg:items-center lg:justify-center lg:space-x-10 xl:space-x-16"
 			>
 				<a
 					href="/"
 					title=""
-					class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
+					class="font-pj rounded text-base font-medium text-gray-900 transition-all duration-200 hover:text-opacity-50 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
 				>
 					Features
 				</a>
@@ -62,7 +62,7 @@
 				<a
 					href="/"
 					title=""
-					class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
+					class="font-pj rounded text-base font-medium text-gray-900 transition-all duration-200 hover:text-opacity-50 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
 				>
 					Docs
 				</a>
@@ -70,7 +70,7 @@
 				<a
 					href="/"
 					title=""
-					class="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
+					class="font-pj rounded text-base font-medium text-gray-900 transition-all duration-200 hover:text-opacity-50 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
 				>
 					Deployment
 				</a>
@@ -81,16 +81,17 @@
 					<a
 						href="/createAdmin"
 						title=""
-						class="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+						class="font-pj inline-flex items-center justify-center rounded-xl border border-transparent bg-gray-900 px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
 						role="button"
 					>
 						Create Super Admin
 					</a>
 				{/if}
 				<a
+					data-sveltekit-prefetch
 					href="/login"
 					title=""
-					class="inline-flex items-center justify-center px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+					class="font-pj inline-flex items-center justify-center rounded-xl border border-transparent bg-gray-900 px-6 py-2 text-base font-bold leading-7 text-white transition-all duration-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
 					role="button"
 				>
 					Sign in
@@ -110,7 +111,7 @@
 							<a
 								href="/"
 								title=""
-								class="flex items-center justify-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
+								class="font-pj -m-3 flex items-center justify-center rounded-xl p-3 text-base font-medium text-gray-900 transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
 							>
 								Features
 							</a>
@@ -118,7 +119,7 @@
 							<a
 								href="/"
 								title=""
-								class="flex items-center justify-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
+								class="font-pj -m-3 flex items-center justify-center rounded-xl p-3 text-base font-medium text-gray-900 transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
 							>
 								Docs
 							</a>
@@ -126,7 +127,7 @@
 							<a
 								href="/"
 								title=""
-								class="flex items-center justify-center p-3 -m-3 text-base font-medium text-gray-900 transition-all duration-200 rounded-xl hover:bg-gray-50 focus:outline-none font-pj focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
+								class="font-pj -m-3 flex items-center justify-center rounded-xl p-3 text-base font-medium text-gray-900 transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
 							>
 								Deployment
 							</a>
@@ -134,7 +135,7 @@
 								<a
 									href="/"
 									title=""
-									class="inline-flex -m-3 px-20 py-2 mx-auto text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+									class="font-pj -m-3 mx-auto inline-flex rounded-xl border border-transparent bg-gray-900 px-20 py-2 text-base font-bold leading-7 text-white transition-all duration-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
 									role="button"
 								>
 									Create Super Admin
@@ -143,7 +144,7 @@
 							<a
 								href="/"
 								title=""
-								class="inline-flex px-32 py-2 text-base mx-auto font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+								class="font-pj mx-auto inline-flex rounded-xl border border-transparent bg-gray-900 px-32 py-2 text-base font-bold leading-7 text-white transition-all duration-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
 								role="button"
 							>
 								Login
@@ -158,6 +159,6 @@
 
 <style>
 	.hamburger-line {
-		@apply block absolute  h-0.5 w-5 rounded bg-current transform transition duration-500 ease-in-out;
+		@apply absolute block  h-0.5 w-5 transform rounded bg-current transition duration-500 ease-in-out;
 	}
 </style>

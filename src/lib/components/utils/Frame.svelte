@@ -10,10 +10,10 @@
 	$: setContext('color', color);
 
 	export let tag: 'div' | 'a' | 'nav' | 'ul' = 'div';
-	export let color: string = 'default';
-	export let rounded: boolean = false;
-	export let border: boolean = false;
-	export let shadow: boolean = false;
+	export let color = 'default';
+	export let rounded = false;
+	export let border = false;
+	export let shadow = false;
 
 	// Export a prop through which you can set a desired svelte transition
 	export let transition: (node: Element, params: object) => TransitionConfig = undefined;

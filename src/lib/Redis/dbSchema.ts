@@ -13,9 +13,13 @@ interface Su {
 	allow: boolean;
 }
 
+interface SessionManager {
+	data: string;
+}
+
 // User Schema
 class User extends Entity {}
-export let userSchema = new Schema(User, {
+export const userSchema = new Schema(User, {
 	name: { type: 'text' },
 	email: { type: 'string' },
 	password: { type: 'string' },
@@ -27,8 +31,13 @@ export let userSchema = new Schema(User, {
 // Super User Creation api Permission
 class Su extends Entity {}
 
-export let suSchema = new Schema(Su, {
+export const suSchema = new Schema(Su, {
 	allow: { type: 'boolean' }
 });
 
-export { Su };
+// Redis session manager Schema
+// I was thinking to replace it with redis somewhere in future
+class SessionManager extends Entity {}
+export const sessionManagerSchema = new Schema(SessionManager, {
+	data: { type: 'string' }
+});

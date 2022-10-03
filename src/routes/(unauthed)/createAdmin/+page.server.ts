@@ -1,8 +1,8 @@
-import { error, redirect } from '@sveltejs/kit';
-import type { Actions, PageServerLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
+import type { Actions } from './$types';
 import { suRepository, userRepository } from '$lib/Redis/dbRepository';
 import { customResponse } from '$lib/utils';
-import * as bcrypt from 'bcrypt';
+import { createUser } from '$lib/Redis/createSave';
 
 export const actions: Actions = {
 	default: async ({ request }) => {
@@ -34,16 +34,9 @@ export const actions: Actions = {
 				return customResponse(400, false, 'User already exist');
 			}
 
-			const newUser = await userRepository.createAndSave({
-				name: name,
-				email: email,
-				phone: phone,
-				password: await bcrypt.hash(password, 10),
-				active: true,
-				user_type: 'su'
-			});
+			await createUser(name, email, phone, password, true, 'su');
 			if (!check) {
-				const permissionDisabled = await suRepository.createAndSave({ allow: false });
+				await suRepository.createAndSave({ allow: false });
 			}
 			return customResponse(200, true, 'User successfully created.');
 		}

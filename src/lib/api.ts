@@ -6,7 +6,7 @@ export async function send(form: HTMLFormElement) {
 	});
 	return response.text().then((json) => {
 		try {
-			let resParsed = JSON.parse(json);
+			const resParsed = JSON.parse(json);
 			if (resParsed?.status === 'error') {
 				console.log(`API response error from: ${json}`);
 			}

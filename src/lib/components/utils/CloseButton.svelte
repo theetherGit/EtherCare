@@ -26,7 +26,7 @@
 		sm: 'm-0.5 rounded focus:ring-1 p-0.5',
 		md: 'rounded-lg focus:ring-2 p-1.5'
 	};
-	let buttonClass: string = '';
+	let buttonClass = '';
 	$: buttonClass = classNames(
 		'ml-auto focus:outline-none whitespace-normal',
 		sizing[size],

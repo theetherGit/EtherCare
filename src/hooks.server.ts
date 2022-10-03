@@ -1,40 +1,52 @@
 import type { Handle } from '@sveltejs/kit';
-import { userRepository } from './lib/Redis/dbRepository';
-
-// custom redirect from joy of code `https://github.com/JoysOfCode/sveltekit-auth-cookies/blob/migration/src/hooks.ts`
-function redirect(location: string, body?: string) {
-	return new Response(body, {
-		status: 303,
-		headers: { location }
-	});
-}
+import { sessionManagerRepository, userRepository } from '$lib/Redis/dbRepository';
+import { redirect } from '@sveltejs/kit';
 
 const unProtectedRoutes: string[] = [
-	'/',
-	'/login',
-	'/createAdmin',
-	'/features',
-	'/docs',
-	'/deployment'
+	'(unauthed)',
+	'(unauthed)/',
+	'(unauthed)/login',
+	'(unauthed)/createAdmin',
+	'(unauthed)/features',
+	'(unauthed)/docs',
+	'(unauthed)/deployment'
 ];
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const session = event.cookies.get('session');
-	if (!session && !unProtectedRoutes.includes(event.url.pathname))
-		return redirect('/login', 'No authenticated user.');
-	const currentUser = await userRepository.fetch(session as string);
 
-	if (currentUser) {
-		event.locals.user = {
-			name: currentUser.name,
-			email: currentUser.email,
-			type: currentUser.user_type,
-			active: currentUser.active,
-			phone: currentUser.phone
+	if (typeof session === ('undefined' || '') || !session) {
+		// Using routeId because routes return __data.json file as route
+		if (!unProtectedRoutes.includes(event.routeId as string)) {
+			return redirect(307, '/login');
+		}
+		event.locals.userAuth = {
+			isAuthenticated: false
+		};
+		return resolve(event);
+	}
+	let currentUser;
+	const sessionData = await sessionManagerRepository.fetch(session);
+
+	if (sessionData && sessionData.data) {
+		currentUser = JSON.parse(sessionData.data);
+		event.locals.userAuth = {
+			isAuthenticated: true,
+			user: currentUser as import('$lib/utils').User
 		};
 	} else {
-		if (!unProtectedRoutes.includes(event.url.pathname)) return redirect('/', 'Not a valid user');
+		await event.cookies.set('session', '');
+		return redirect(307, '/login');
 	}
 
+	if (currentUser) {
+		event.locals.userAuth = {
+			isAuthenticated: true,
+			user: currentUser as import('$lib/utils').User
+		};
+	} else {
+		// Using routeId because routes return __data.json file as route
+		if (!unProtectedRoutes.includes(event.routeId as string)) return redirect(307, '/login');
+	}
 	return resolve(event);
 };

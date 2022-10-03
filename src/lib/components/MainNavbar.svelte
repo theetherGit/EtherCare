@@ -1,20 +1,40 @@
-<script>
+<script lang="ts">
 	import Modals from './Modals.svelte';
 	import { fade } from 'svelte/transition';
+	import { user } from '../stores/user';
+	import { invalidateAll } from '$app/navigation';
 
+	export let userName;
 	let open = false;
+	let searchType: 'Tickets' | 'Documents' = 'Tickets';
+	let searchValue: string;
+	let dropDownOpen = false;
+	let searchTypes: string[] = ['Tickets', 'Documents'];
+
+	const logout = async () => {
+		const data = await fetch('api/logout', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then((r) => r.json());
+		user.set(null);
+		await invalidateAll();
+		console.log(data);
+	};
 </script>
 
-<div class="flex flex-col flex-1 bg-white">
-	<header class="bg-white border-b border-gray-200">
-		<div class="px-4 mx-auto">
-			<div class="flex items-center justify-between h-16">
-				<div class="flex items-center -m-2 lg:hidden">
+<div class="flex flex-1 flex-col bg-white">
+	<header class="border-b border-gray-200 bg-white">
+		<div class="mx-auto px-4">
+			<div class="flex h-16 items-center justify-between">
+				<div class="-m-2 block lg:hidden">
 					<button
 						type="button"
-						class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-lg hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+						class="inline-flex items-center justify-center rounded-lg bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
 					>
 						<svg
+							class="h-6 w-6"
 							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
@@ -26,15 +46,15 @@
 					</button>
 				</div>
 
-				<div class="flex ml-6 mr-auto lg:ml-0">
-					<div class="flex items-center flex-shrink-0">
+				<div class="ml-6 mr-auto flex lg:ml-0">
+					<div class="flex flex-shrink-0 items-center">
 						<img
-							class="block w-auto h-8 lg:hidden"
+							class="block h-8 w-auto lg:hidden"
 							src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/logo-symbol.svg"
 							alt=""
 						/>
 						<img
-							class="hidden w-auto h-8 lg:block"
+							class="hidden h-8 w-auto lg:block"
 							src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/logo.svg"
 							alt=""
 						/>
@@ -45,16 +65,14 @@
 					<div class="relative">
 						<button
 							type="button"
-							on:click={() => {
-								open = true;
-							}}
-							class="p-1 text-gray-700 transition-all duration-200 bg-white rounded-full hover:text-gray-900 focus:outline-none hover:bg-gray-100"
+							on:click={() => (open = true)}
+							class="rounded-full bg-white p-1 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 focus:outline-none"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="0 0 24 24"
 								fill="currentColor"
-								class="w-6 h-6"
+								class="h-6 w-6"
 							>
 								<path
 									fill-rule="evenodd"
@@ -68,7 +86,7 @@
 					<div class="relative">
 						<button
 							type="button"
-							class="p-1 text-gray-700 transition-all duration-200 bg-white rounded-full hover:text-gray-900 focus:outline-none hover:bg-gray-100"
+							class="rounded-full bg-white p-1 text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900 focus:outline-none"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +94,7 @@
 								viewBox="0 0 24 24"
 								stroke="currentColor"
 								stroke-width="2"
-								class="w-6 h-6"
+								class="h-6 w-6"
 							>
 								<path
 									stroke-linecap="round"
@@ -86,7 +104,7 @@
 							</svg>
 						</button>
 						<span
-							class="inline-flex items-center px-1.5 absolute -top-px -right-1 py-0.5 rounded-full text-xs font-semibold bg-indigo-600 text-white"
+							class="absolute -top-px -right-1 inline-flex items-center rounded-full bg-indigo-600 px-1.5 py-0.5 text-xs font-semibold text-white"
 						>
 							6
 						</span>
@@ -94,26 +112,16 @@
 
 					<button
 						type="button"
-						class="flex items-center max-w-xs rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+						class="flex max-w-xs items-center rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
 					>
 						<img
-							class="object-cover w-8 h-8 bg-gray-300 rounded-full"
+							class="h-8 w-8 rounded-full bg-gray-300 object-cover"
 							src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/vertical-menu/1/avatar-male.png"
 							alt=""
 						/>
-						<span class="hidden ml-2 text-sm font-medium text-gray-900 md:block">
-							Jacob Jones
+						<span class="ml-2 hidden text-sm font-medium text-gray-900 md:block">
+							{userName}
 						</span>
-						<svg
-							class="w-4 h-4 ml-3 text-gray-500"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke="currentColor"
-							stroke-width="2"
-						>
-							<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-						</svg>
 					</button>
 				</div>
 			</div>
@@ -122,13 +130,13 @@
 
 	<div class="flex flex-1">
 		<div class="hidden border-r border-gray-200 md:flex md:w-64 md:flex-col">
-			<div class="flex flex-col pt-5 overflow-y-auto">
-				<div class="flex flex-col justify-between flex-1 h-full px-4">
+			<div class="flex flex-col overflow-y-auto pt-5">
+				<div class="flex h-full flex-1 flex-col justify-between px-4">
 					<div class="space-y-4">
 						<div>
 							<button
 								type="button"
-								class="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 hover:bg-indigo-500"
+								class="inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
 							>
 								New Issue
 							</button>
@@ -138,10 +146,10 @@
 							<a
 								href="/dashboard"
 								title=""
-								class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+								class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 							>
 								<svg
-									class="flex-shrink-0 w-5 h-5 mr-4"
+									class="mr-4 h-5 w-5 flex-shrink-0"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -159,17 +167,17 @@
 						</nav>
 
 						<div>
-							<p class="px-4 text-xs font-semibold tracking-widest text-gray-400 uppercase">
+							<p class="px-4 text-xs font-semibold uppercase tracking-widest text-gray-400">
 								Analytics
 							</p>
-							<nav class="flex-1 mt-4 space-y-1">
+							<nav class="mt-4 flex-1 space-y-1">
 								<a
 									href="/dashboard"
 									title=""
-									class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
 									<svg
-										class="flex-shrink-0 w-5 h-5 mr-4"
+										class="mr-4 h-5 w-5 flex-shrink-0"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -188,10 +196,10 @@
 								<a
 									href="/dashboard"
 									title=""
-									class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
 									<svg
-										class="flex-shrink-0 w-5 h-5 mr-4"
+										class="mr-4 h-5 w-5 flex-shrink-0"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -206,7 +214,7 @@
 									</svg>
 									Hotjar
 									<span
-										class="text-xs uppercase ml-auto font-semibold text-indigo-600 bg-indigo-50 border border-indigo-300 rounded-full inline-flex items-center px-2 py-0.5"
+										class="ml-auto inline-flex items-center rounded-full border border-indigo-300 bg-indigo-50 px-2 py-0.5 text-xs font-semibold uppercase text-indigo-600"
 									>
 										New
 									</span>
@@ -215,17 +223,17 @@
 						</div>
 
 						<div>
-							<p class="px-4 text-xs font-semibold tracking-widest text-gray-400 uppercase">
+							<p class="px-4 text-xs font-semibold uppercase tracking-widest text-gray-400">
 								Support
 							</p>
-							<nav class="flex-1 mt-4 space-y-1">
+							<nav class="mt-4 flex-1 space-y-1">
 								<a
 									href="/dashboard"
 									title=""
-									class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
 									<svg
-										class="flex-shrink-0 w-5 h-5 mr-4"
+										class="mr-4 h-5 w-5 flex-shrink-0"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -240,7 +248,7 @@
 									</svg>
 									Tickets
 									<span
-										class="text-xs uppercase ml-auto font-semibold text-white bg-gray-500 border border-transparent rounded-full inline-flex items-center px-2 py-0.5"
+										class="ml-auto inline-flex items-center rounded-full border border-transparent bg-gray-500 px-2 py-0.5 text-xs font-semibold uppercase text-white"
 									>
 										15
 									</span>
@@ -249,10 +257,10 @@
 								<a
 									href="/dashboard"
 									title=""
-									class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
 									<svg
-										class="flex-shrink-0 w-5 h-5 mr-4"
+										class="mr-4 h-5 w-5 flex-shrink-0"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -271,10 +279,10 @@
 								<a
 									href="/dashboard"
 									title=""
-									class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
 									<svg
-										class="flex-shrink-0 w-5 h-5 mr-4"
+										class="mr-4 h-5 w-5 flex-shrink-0"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -293,15 +301,15 @@
 						</div>
 
 						<div>
-							<p class="px-4 text-xs font-semibold tracking-widest text-gray-400 uppercase">Shop</p>
-							<nav class="flex-1 mt-4 space-y-1">
+							<p class="px-4 text-xs font-semibold uppercase tracking-widest text-gray-400">Shop</p>
+							<nav class="mt-4 flex-1 space-y-1">
 								<a
 									href="/dashboard"
 									title=""
-									class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
 									<svg
-										class="flex-shrink-0 w-5 h-5 mr-4"
+										class="mr-4 h-5 w-5 flex-shrink-0"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -320,10 +328,10 @@
 								<a
 									href="/dashboard"
 									title=""
-									class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
 									<svg
-										class="flex-shrink-0 w-5 h-5 mr-4"
+										class="mr-4 h-5 w-5 flex-shrink-0"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -342,10 +350,10 @@
 								<a
 									href="/dashboard"
 									title=""
-									class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 								>
 									<svg
-										class="flex-shrink-0 w-5 h-5 mr-4"
+										class="mr-4 h-5 w-5 flex-shrink-0"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
@@ -364,15 +372,15 @@
 						</div>
 					</div>
 
-					<div class="pb-4 mt-12">
+					<div class="mt-12 pb-4">
 						<nav class="flex-1 space-y-1">
 							<a
 								href="/dashboard"
 								title=""
-								class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+								class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 							>
 								<svg
-									class="flex-shrink-0 w-5 h-5 mr-4"
+									class="mr-4 h-5 w-5 flex-shrink-0"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -396,10 +404,11 @@
 							<a
 								href="/dashboard"
 								title=""
-								class="flex items-center px-4 py-2.5 text-sm font-medium transition-all duration-200 text-gray-900 rounded-lg hover:bg-gray-200 group"
+								on:click={logout}
+								class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
 							>
 								<svg
-									class="flex-shrink-0 w-5 h-5 mr-4"
+									class="mr-4 h-5 w-5 flex-shrink-0"
 									xmlns="http://www.w3.org/2000/svg"
 									fill="none"
 									viewBox="0 0 24 24"
@@ -420,10 +429,10 @@
 			</div>
 		</div>
 
-		<div class="flex flex-col flex-1">
+		<div class="flex flex-1 flex-col">
 			<main>
 				<div class="py-6">
-					<div class="px-4 mx-auto max-w-7xl sm:px-6 md:px-8">
+					<div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
 						<slot />
 					</div>
 				</div>
@@ -433,6 +442,132 @@
 </div>
 {#if open}
 	<div transition:fade>
-		<Modals title="Search for Tickets and Docs" bind:open/>
+		<Modals on:close={() => (open = false)}>
+			<span slot="header">
+				<div class="flex items-center justify-start	">
+					<div class="flex-initial bg-white py-2">
+						<div class="mx-auto max-w-7xl pl-2 sm:px-6">
+							<div class="mx-auto max-w-lg">
+								<div class="relative">
+									<div class="mt-2">
+										<div
+											on:click={() => {
+												dropDownOpen = !dropDownOpen;
+											}}
+											class="block w-full cursor-pointer rounded-lg border border-gray-300 py-2 px-5 focus:border-indigo-600 focus:outline-none focus:ring-indigo-600 sm:text-sm"
+										>
+											<div class="flex items-center">
+												<div class="flex items-center justify-start space-x-2">
+													<span>{searchType}</span>
+												</div>
+												<svg
+													xmlns="http://www.w3.org/2000/svg"
+													class="ml-5 h-4 w-4 {!dropDownOpen ? '' : 'transform rotate-180'}"
+													fill="none"
+													viewBox="0 0 24 24"
+													stroke="currentColor"
+													stroke-width="2"
+												>
+													<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+												</svg>
+											</div>
+										</div>
+									</div>
+									{#if dropDownOpen}
+										<div class="absolute -bottom-10 z-10 w-full">
+											<div
+												class="block w-full space-y-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm shadow"
+											>
+												<ul class="flex flex-col">
+													{#each searchTypes as type}
+														<li
+															class="w-full cursor-pointer rounded-md p-2 hover:bg-gray-100"
+															on:click={() => {
+																searchType = type;
+																dropDownOpen = false;
+															}}
+														>
+															{type}
+														</li>
+													{/each}
+												</ul>
+											</div>
+										</div>
+									{/if}
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="bg-white py-2">
+						<div class="mx-auto max-w-7xl px-2">
+							<div class="mx-auto max-w-lg">
+								<div class="relative mt-2">
+									<div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="h-4 w-4 text-gray-400"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+											/>
+										</svg>
+									</div>
+
+									<input
+										type="text"
+										name=""
+										id=""
+										placeholder="Search here"
+										bind:value={searchValue}
+										class="block w-full rounded-lg border border-gray-300 py-2 pl-8 pr-5 placeholder-gray-500 caret-indigo-600 focus:border-indigo-600 focus:ring-indigo-600 sm:text-sm"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</span>
+			<hr />
+			<div class="bg-white">
+				<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+					<div class="mt-2 space-y-8 last:mb-4">
+						<div class="flex items-center">
+							<img
+								class="h-10 w-10 flex-shrink-0 rounded-full object-cover"
+								src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/table-stacked/5/avatar-female.png"
+								alt=""
+							/>
+							<div class="ml-4 min-w-0 flex-1">
+								<p class="truncate text-sm font-bold text-gray-900">Kristin Watson</p>
+								<p class="mt-1 text-xs font-medium text-gray-500">
+									Purchased <span class="text-indigo-600"> Clarity Landing UI Kit </span>
+								</p>
+							</div>
+						</div>
+
+						<div class="flex items-center">
+							<img
+								class="h-10 w-10 flex-shrink-0 rounded-full object-cover"
+								src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/table-stacked/5/avatar-female.png"
+								alt=""
+							/>
+							<div class="ml-4 min-w-0 flex-1">
+								<p class="truncate text-sm font-bold text-gray-900">Kristin Watson</p>
+								<p class="mt-1 text-xs font-medium text-gray-500">
+									Purchased <span class="text-indigo-600"> Clarity Landing UI Kit </span>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</Modals>
 	</div>
 {/if}
