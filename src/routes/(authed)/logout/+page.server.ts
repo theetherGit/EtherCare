@@ -10,7 +10,9 @@ export const actions: Actions = {
 	default: async ({ cookies, locals }) => {
 		if (locals && locals.userAuth && locals.userAuth.isAuthenticated) {
 			await sessionManagerRepository.remove(cookies.get('session') as string);
-			cookies.delete('session')
+			cookies.delete('session', {
+				path: '/'
+			});
 			return redirect(302, '/login');
 		}
 		return redirect(302, '/login');

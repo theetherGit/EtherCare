@@ -2,15 +2,15 @@ import type { Handle } from '@sveltejs/kit';
 import { sessionManagerRepository, userRepository } from '$lib/Redis/dbRepository';
 import { redirect } from '@sveltejs/kit';
 
-const unProtectedRoutes: string[] = [
-	'(unauthed)',
-	'(unauthed)/',
-	'(unauthed)/login',
-	'(unauthed)/createAdmin',
-	'(unauthed)/features',
-	'(unauthed)/docs',
-	'(unauthed)/deployment'
-];
+// const unProtectedRoutes: string[] = [
+// 	'(unauthed)',
+// 	'(unauthed)/',
+// 	'(unauthed)/login',
+// 	'(unauthed)/createAdmin',
+// 	'(unauthed)/features',
+// 	'(unauthed)/docs',
+// 	'(unauthed)/deployment'
+// ];
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const session = event.cookies.get('session');
