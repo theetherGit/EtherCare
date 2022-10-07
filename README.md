@@ -129,7 +129,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Shivam - [@theether0](https://twitter.com/theether0) - shivam@theether.in
 
-EtherCare: [https://github.com/theetherGit/EtherCare](https://github.com/your_username/repo_name)
+EtherCare: [https://github.com/theetherGit/EtherCare](https://github.com/theetherGit/EtherCare)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
