@@ -2,26 +2,12 @@
 	import Modals from './Modals.svelte';
 	import { fade } from 'svelte/transition';
 	import { user } from '../stores/user';
-	import { invalidateAll } from '$app/navigation';
 
-	export let userName;
 	let open = false;
 	let searchType: 'Tickets' | 'Documents' = 'Tickets';
 	let searchValue: string;
 	let dropDownOpen = false;
 	let searchTypes: string[] = ['Tickets', 'Documents'];
-
-	const logout = async () => {
-		const data = await fetch('api/logout', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then((r) => r.json());
-		user.set(null);
-		await invalidateAll();
-		console.log(data);
-	};
 </script>
 
 <div class="flex flex-1 flex-col bg-white">
@@ -48,16 +34,17 @@
 
 				<div class="ml-6 mr-auto flex lg:ml-0">
 					<div class="flex flex-shrink-0 items-center">
-						<img
-							class="block h-8 w-auto lg:hidden"
-							src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/logo-symbol.svg"
-							alt=""
-						/>
-						<img
-							class="hidden h-8 w-auto lg:block"
-							src="https://landingfoliocom.imgix.net/store/collection/clarity-dashboard/images/logo.svg"
-							alt=""
-						/>
+						<img class="block h-8 w-auto" src="green.svg" alt="" />
+						<!--						<span-->
+						<!--							class="ml-4 animate-text bg-gradient-to-r from-[#5AD172] via-[#5AD172] to-[#1FB597] bg-clip-text-->
+						<!--            						text-xl font-bold text-transparent-->
+						<!--            						md:text-2xl">Ether Corps</span-->
+						<!--						>-->
+						<span
+							class="ml-4 hidden text-xl font-bold
+            						text-black text-primary md:text-2xl
+            						lg:block">Ether Corps</span
+						>
 					</div>
 				</div>
 
@@ -104,7 +91,7 @@
 							</svg>
 						</button>
 						<span
-							class="absolute -top-px -right-1 inline-flex items-center rounded-full bg-indigo-600 px-1.5 py-0.5 text-xs font-semibold text-white"
+							class="absolute -top-px -right-1 inline-flex items-center rounded-full bg-primary px-1.5 py-0.5 text-xs font-semibold text-white"
 						>
 							6
 						</span>
@@ -120,7 +107,7 @@
 							alt=""
 						/>
 						<span class="ml-2 hidden text-sm font-medium text-gray-900 md:block">
-							{userName}
+							{$user?.name}
 						</span>
 					</button>
 				</div>
@@ -134,12 +121,21 @@
 				<div class="flex h-full flex-1 flex-col justify-between px-4">
 					<div class="space-y-4">
 						<div>
-							<button
-								type="button"
-								class="inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
-							>
-								New Issue
-							</button>
+							{#if $user.type !== 'su'}
+								<button
+									type="button"
+									class="inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-primary px-4 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 hover:bg-secondary focus:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2"
+								>
+									New Issue
+								</button>
+							{:else}
+								<button
+									type="button"
+									class="inline-flex w-full items-center justify-center rounded-lg border border-transparent bg-primary px-4 py-3 text-sm font-semibold leading-5 text-white transition-all duration-200 hover:bg-secondary focus:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2"
+								>
+									Add New Project
+								</button>
+							{/if}
 						</div>
 
 						<nav class="flex-1 space-y-1">
@@ -400,28 +396,29 @@
 								</svg>
 								Settings
 							</a>
-							<form action="/logout" method="POST">
-								<button
-									title=""
-									class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
-								>
-									<svg
-										class="mr-4 h-5 w-5 flex-shrink-0"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-										stroke-width="2"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-										/>
-									</svg>
-									Logout
-								</button>
-							</form>
+							<div
+								class="group flex items-center rounded-lg px-4 py-2.5 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-200"
+							>
+								<form action="/logout" method="POST">
+									<button title="" class="inline-flex">
+										<svg
+											class="mr-4 h-5 w-5 flex-shrink-0"
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											stroke-width="2"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+											/>
+										</svg>
+										Logout
+									</button>
+								</form>
+							</div>
 						</nav>
 					</div>
 				</div>

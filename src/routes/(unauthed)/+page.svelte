@@ -61,8 +61,8 @@
 		<div class="relative">
 			<div class="absolute inset-0 h-2/3 bg-gray-50" />
 			<div class="relative mx-auto">
-				<div class="mb-10 lg:mx-auto lg:max-w-6xl">
-					<img class="scale-110 transform" src="ladning.png" alt="" />
+				<div class="p-7 md:m-20 lg:m-10 lg:mx-auto lg:max-w-6xl">
+					<img class="scale-110 transform" src="landing.png" alt="" />
 				</div>
 			</div>
 		</div>

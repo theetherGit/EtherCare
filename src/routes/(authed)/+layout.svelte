@@ -7,6 +7,6 @@
 	user.set(data.user);
 </script>
 
-<MainNavbar userName={$user.name}>
+<MainNavbar>
 	<slot />
 </MainNavbar>

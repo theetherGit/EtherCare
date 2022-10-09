@@ -3,7 +3,7 @@
 	import Navbar from '$lib/components/Navbar.svelte';
 	import { permission } from '$lib/stores/suPermission';
 	import { Toaster } from 'svelte-french-toast';
-	import {goto} from "$app/navigation";
+	import { goto } from '$app/navigation';
 
 	export let data;
 	if (data && 'permission' in data && (data.permission !== null || '')) {
