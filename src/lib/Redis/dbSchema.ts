@@ -17,6 +17,14 @@ interface SessionManager {
 	data: string;
 }
 
+interface Project {
+	name: string;
+	type: 'Personal' | 'Team';
+	details: string;
+	display: string;
+	template: string;
+}
+
 // User Schema
 class User extends Entity {}
 export const userSchema = new Schema(User, {
@@ -40,4 +48,14 @@ export const suSchema = new Schema(Su, {
 class SessionManager extends Entity {}
 export const sessionManagerSchema = new Schema(SessionManager, {
 	data: { type: 'string' }
+});
+
+class Project extends Entity {}
+
+export const ProjectSchema = new Schema(Project, {
+	name: { type: 'string' },
+	type: { type: 'string' },
+	details: { type: 'string' },
+	display: { type: 'string' },
+	template: { type: 'string' }
 });
