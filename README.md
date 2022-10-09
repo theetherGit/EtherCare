@@ -55,9 +55,9 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/theetherGit/EtherCare/blob/main/static/landing.png)
+[![EtherCare Dashboard][ethercare-dashboard]](https://github.com/theetherGit/EtherCare/blob/main/static/dashboard.png)
 
-There are many open source project management apps or webapp. What I was looking for was suppose to be not a messy or chaotic UI, well good design is key to everything. Currently, it's under development phase.
+There are many open source project management apps or webapp. What I was looking for was supposed to be not a messy or chaotic UI, well good design is key to everything. Currently, it's under development phase.
 
 Here's why:
 
