@@ -55,7 +55,7 @@
 
 ## About The Project
 
-[![EtherCare Dashboard][ethercare-dashboard]](https://github.com/theetherGit/EtherCare/blob/main/static/dashboard.png)
+[![EtherCare Dashboard][dashboard]][dashboard]
 
 There are many open source project management apps or webapp. What I was looking for was supposed to be not a messy or chaotic UI, well good design is key to everything. Currently, it's under development phase.
 
@@ -152,3 +152,4 @@ EtherCare: [https://github.com/theetherGit/EtherCare](https://github.com/theethe
 [vitejs-url]: https://vitejs.dev
 [redis.io]: https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white
 [redis-url]: https://redis.io
+[dashboard]: https://github.com/theetherGit/EtherCare/blob/main/static/dashboard.png
