@@ -49,6 +49,6 @@ export const actions: Actions = {
 			secure: !dev,
 			maxAge: 60 * 60 * 24 * 30
 		});
-		throw redirect(307, '/dashboard');
+		throw redirect(302, '/dashboard');
 	}
 };

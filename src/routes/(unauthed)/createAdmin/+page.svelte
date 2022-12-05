@@ -4,10 +4,11 @@
 	import { page } from '$app/stores';
 	import toast from 'svelte-french-toast';
 	import { invalidateAll } from '$app/navigation';
+	import type { ActionData } from './$types';
 
-	let form = $page.form;
-	$: if (form && form.data && !form.data.success && form.data.message) {
-		toast.error(form.data.message, {
+	export let form: ActionData;
+	$: if (form && !form.success && form.message) {
+		toast.error(form.message, {
 			style: 'border-radius: 200px; background: #333; color: #fff;'
 		});
 	} else if (form && form.data && form.data.success && form.data.message) {
@@ -72,11 +73,7 @@
 
 			<div class="mt-6 text-center">
 				<p class="text-sm font-medium text-gray-900">
-					Already have an account? <a
-						href="/createAdmin"
-						title=""
-						class="font-bold hover:underline"
-					>
+					Already have an account? <a href="/login" title="" class="font-bold hover:underline">
 						Login now
 					</a>
 				</p>

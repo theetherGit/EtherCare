@@ -1,13 +1,12 @@
 <script lang="ts">
 	import Input from '$lib/components/Input.svelte';
-	import { applyAction, enhance } from '$app/forms';
+	import { enhance } from '$app/forms';
 	import toast from 'svelte-french-toast';
-	import { page } from '$app/stores';
-	import { invalidateAll } from '$app/navigation';
+	import type { ActionData } from './$types';
 
-	let form = $page.form;
-	$: if (form && form.data && !form.data.success && form.data.message) {
-		toast.error(form.data.message, {
+	export let form: ActionData;
+	$: if (form && !form.success && form.message) {
+		toast.error(form.message, {
 			style: 'border-radius: 200px; background: #333; color: #fff;'
 		});
 	}
@@ -26,17 +25,7 @@
 				<p class="mt-4 text-sm font-medium text-gray-500">Begin your work</p>
 			</div>
 
-			<form
-				method="POST"
-				class="mt-4"
-				use:enhance={() => {
-					return async ({ result }) => {
-						await invalidateAll();
-						if (result.type === 'redirect') await applyAction(result);
-						else form = result;
-					};
-				}}
-			>
+			<form method="POST" class="mt-4" use:enhance>
 				<div class="space-y-4">
 					<Input name="email" type="email" placeholder="Type email address here" label="Email" />
 					<Input
