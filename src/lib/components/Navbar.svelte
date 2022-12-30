@@ -1,5 +1,6 @@
 <script>
 	import { fade } from 'svelte/transition';
+	import {app_name} from "$lib/constants";
 	let show = false;
 	let innerWidth = 0;
 	export let permission;
@@ -15,7 +16,7 @@
 				<span
 					class="absolute inset-0 h-full w-full bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] opacity-50 blur-lg filter"
 				/>
-				<span class="relative text-3xl font-bold">EtherCare</span>
+				<span class="relative text-3xl font-bold">{app_name}</span>
 			</div>
 
 			<div class="flex lg:hidden">

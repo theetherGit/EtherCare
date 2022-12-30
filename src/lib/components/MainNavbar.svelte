@@ -2,6 +2,7 @@
 	import Modals from './Modals.svelte';
 	import { fade } from 'svelte/transition';
 	import { user } from '../stores/user';
+	import {app_name} from "../constants";
 
 	let open = false;
 	let searchType: 'Tickets' | 'Documents' = 'Tickets';
@@ -43,7 +44,7 @@
 						<span
 							class="ml-4 hidden text-xl font-bold
             						text-black text-primary md:text-2xl
-            						lg:block">Ether Corps</span
+            						lg:block">{app_name}</span
 						>
 					</div>
 				</div>
