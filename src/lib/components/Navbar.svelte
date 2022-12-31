@@ -1,6 +1,6 @@
 <script>
 	import { fade } from 'svelte/transition';
-	import {app_name} from "$lib/constants";
+	import { app_name } from '$lib/constants';
 	let show = false;
 	let innerWidth = 0;
 	export let permission;

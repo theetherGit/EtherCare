@@ -2,7 +2,7 @@
 	import Modals from './Modals.svelte';
 	import { fade } from 'svelte/transition';
 	import { user } from '../stores/user';
-	import {app_name} from "../constants";
+	import { app_name } from '../constants';
 
 	let open = false;
 	let searchType: 'Tickets' | 'Documents' = 'Tickets';
